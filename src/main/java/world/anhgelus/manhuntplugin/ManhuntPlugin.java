@@ -1,6 +1,8 @@
 package world.anhgelus.manhuntplugin;
 
+import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import world.anhgelus.gamelibrary.commands.Subcommand;
 import world.anhgelus.gamelibrary.game.Game;
@@ -21,12 +23,14 @@ public final class ManhuntPlugin extends JavaPlugin {
     private static ManhuntPlugin INSTANCE;
     private static Game GAME;
     private static ConfigAPI CONFIG_API;
+    private static Material COMPASS;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         INSTANCE = this;
         CONFIG_API = new ConfigAPI(this);
+        COMPASS = Material.valueOf(CONFIG_API.getConfig("config").get().getString("compass-item"));
 
         // Initialize the game and the game engine
         GAME = new Game(this, "Manhunt");
@@ -77,5 +81,13 @@ public final class ManhuntPlugin extends JavaPlugin {
 
     public static ConfigAPI getConfigAPI() {
         return CONFIG_API;
+    }
+
+    public static Material getCompass() {
+        return COMPASS;
+    }
+
+    public static void setCompass(Material COMPASS) {
+        ManhuntPlugin.COMPASS = COMPASS;
     }
 }

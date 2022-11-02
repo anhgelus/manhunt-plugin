@@ -37,6 +37,10 @@ public class ManhuntPlayerManager {
         return PLAYERS.contains(new ManhuntPlayer(player));
     }
 
+    public static ManhuntPlayer getPlayer(Player player) {
+        return PLAYERS.stream().filter(manhuntPlayer -> manhuntPlayer.player.equals(player)).findFirst().orElseThrow(NoSuchElementException::new);
+    }
+
     public static ManhuntPlayer bestKiller() {
         if (PLAYERS.isEmpty()) {
             throw new NoSuchElementException("No players registered!");

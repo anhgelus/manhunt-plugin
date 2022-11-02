@@ -1,5 +1,6 @@
 package world.anhgelus.manhuntplugin.player;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import world.anhgelus.gamelibrary.team.Team;
 
@@ -9,6 +10,8 @@ public class ManhuntPlayer {
     private Team team;
     private int death;
     private int kill;
+
+    private ManhuntPlayer compassTarget;
 
     public ManhuntPlayer(Player player) {
         this.player = player;
@@ -52,5 +55,13 @@ public class ManhuntPlayer {
 
     public void addOneKill() {
         kill++;
+    }
+
+    public ManhuntPlayer getCompassTarget() {
+        return compassTarget;
+    }
+
+    public void setCompassTarget(ManhuntPlayer compassTarget) {
+        this.compassTarget = compassTarget;
     }
 }
