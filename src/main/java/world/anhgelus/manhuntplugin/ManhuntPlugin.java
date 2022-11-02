@@ -8,7 +8,6 @@ import world.anhgelus.gamelibrary.game.commands.GameCommandManager;
 import world.anhgelus.gamelibrary.game.engine.GameEngine;
 import world.anhgelus.gamelibrary.team.TeamManager;
 import world.anhgelus.manhuntplugin.command.manhunt.ManhuntCommand;
-import world.anhgelus.manhuntplugin.command.manhunt.ManhuntTabCompleter;
 import world.anhgelus.manhuntplugin.command.manhunt.TeamSubcommand;
 import world.anhgelus.manhuntplugin.conditions.GConditions;
 import world.anhgelus.manhuntplugin.conditions.SConditions;
@@ -51,8 +50,9 @@ public final class ManhuntPlugin extends JavaPlugin {
         );
         final PluginCommand manhuntCommand = getCommand("manhunt");
         if (manhuntCommand != null) {
-            manhuntCommand.setExecutor(new ManhuntCommand(manhuntSubcommands));
-            manhuntCommand.setTabCompleter(new ManhuntTabCompleter(manhuntSubcommands));
+            final ManhuntCommand manhuntCommandExecutor = new ManhuntCommand(manhuntSubcommands);
+            manhuntCommand.setExecutor(manhuntCommandExecutor);
+            manhuntCommand.setTabCompleter(manhuntCommandExecutor.getGenericTabCompleter());
         }
 
         getLogger().info("ManhuntPlugin has been enabled!");
