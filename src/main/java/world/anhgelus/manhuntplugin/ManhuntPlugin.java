@@ -7,6 +7,7 @@ import world.anhgelus.gamelibrary.game.Game;
 import world.anhgelus.gamelibrary.game.commands.GameCommandManager;
 import world.anhgelus.gamelibrary.game.engine.GameEngine;
 import world.anhgelus.gamelibrary.team.TeamManager;
+import world.anhgelus.gamelibrary.util.config.ConfigAPI;
 import world.anhgelus.manhuntplugin.command.manhunt.ManhuntCommand;
 import world.anhgelus.manhuntplugin.command.manhunt.TeamSubcommand;
 import world.anhgelus.manhuntplugin.conditions.GConditions;
@@ -19,11 +20,13 @@ import java.util.List;
 public final class ManhuntPlugin extends JavaPlugin {
     private static ManhuntPlugin INSTANCE;
     private static Game GAME;
+    private static ConfigAPI CONFIG_API;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         INSTANCE = this;
+        CONFIG_API = new ConfigAPI(this);
 
         // Initialize the game and the game engine
         GAME = new Game(this, "Manhunt");
@@ -70,5 +73,9 @@ public final class ManhuntPlugin extends JavaPlugin {
 
     public static Game getGame() {
         return GAME;
+    }
+
+    public static ConfigAPI getConfigAPI() {
+        return CONFIG_API;
     }
 }
