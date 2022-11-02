@@ -3,6 +3,7 @@ package world.anhgelus.manhuntplugin.command.manhunt;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import world.anhgelus.gamelibrary.commands.Permission;
 import world.anhgelus.gamelibrary.commands.Subcommand;
 import world.anhgelus.gamelibrary.util.SenderHelper;
 import world.anhgelus.manhuntplugin.ManhuntPlugin;
@@ -14,7 +15,7 @@ import java.util.List;
 public class CompassSubcommand extends Subcommand {
 
     public CompassSubcommand() {
-        super("compass", "Manage the compass", null);
+        super("compass", "Manage the compass", new Permission("manhunt.compass"));
     }
 
     @Override

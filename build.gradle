@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'world.anhgelus'
-version = '0.4.0-alpha.1'
+version = '0.4.0-alpha.2'
 
 repositories {
     mavenCentral()
@@ -24,7 +24,7 @@ repositories {
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT'
 
-    implementation 'com.github.anhgelus:gamelibrary:v0.5.2-beta.1'
+    implementation 'com.github.anhgelus:gamelibrary:v0.5.3-beta.2'
 }
 
 def targetJavaVersion = 17

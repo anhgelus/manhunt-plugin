@@ -2,6 +2,7 @@ package world.anhgelus.manhuntplugin.command.manhunt;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import world.anhgelus.gamelibrary.commands.Permission;
 import world.anhgelus.gamelibrary.commands.Subcommand;
 import world.anhgelus.gamelibrary.team.Team;
 import world.anhgelus.gamelibrary.team.TeamManager;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class TeamSubcommand extends Subcommand {
     public TeamSubcommand() {
-        super("team", "Manage team", null);
+        super("team", "Manage team", new Permission("manhunt.team"));
     }
 
     @Override
