@@ -2,7 +2,6 @@ package world.anhgelus.manhuntplugin;
 
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import world.anhgelus.gamelibrary.commands.Subcommand;
 import world.anhgelus.gamelibrary.game.Game;
@@ -10,8 +9,10 @@ import world.anhgelus.gamelibrary.game.commands.GameCommandManager;
 import world.anhgelus.gamelibrary.game.engine.GameEngine;
 import world.anhgelus.gamelibrary.team.TeamManager;
 import world.anhgelus.gamelibrary.util.config.ConfigAPI;
+import world.anhgelus.manhuntplugin.command.manhunt.GetCompassSubcommand;
 import world.anhgelus.manhuntplugin.command.manhunt.ManhuntCommand;
 import world.anhgelus.manhuntplugin.command.manhunt.TeamSubcommand;
+import world.anhgelus.manhuntplugin.command.manhunt.TrackerSubcommand;
 import world.anhgelus.manhuntplugin.conditions.GConditions;
 import world.anhgelus.manhuntplugin.conditions.SConditions;
 import world.anhgelus.manhuntplugin.conditions.WConditions;
@@ -53,7 +54,7 @@ public final class ManhuntPlugin extends JavaPlugin {
 
         // Register the commands
         final List<Subcommand> manhuntSubcommands = List.of(
-                new TeamSubcommand()
+                new TeamSubcommand(), new TrackerSubcommand(), new GetCompassSubcommand()
         );
         final PluginCommand manhuntCommand = getCommand("manhunt");
         if (manhuntCommand != null) {
