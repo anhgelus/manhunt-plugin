@@ -42,7 +42,7 @@ public class GUIListener implements Listener {
         if (clickedItem.getType() == NEXT_ITEM) {
             player.closeInventory();
             final int next = Integer.parseInt(clickedItem.getItemMeta().getDisplayName());
-            final Inventory nextInv = generateGUI(next);
+            final Inventory nextInv = generateGUI(next-1);
             if (nextInv == null) {
                 return;
             }
@@ -63,13 +63,17 @@ public class GUIListener implements Listener {
     @Nullable
     public static Inventory generateGUI(int line) {
         final List<Player> players = TeamList.RUNNER.team.getPlayers();
-        final Inventory gui = Bukkit.createInventory(null, 9, "Compass");
+        final Inventory gui = Bukkit.createInventory(null, 9, "Compass Tracking");
         if (players.isEmpty()) {
             return null;
         }
         final int itemsPerLine = gui.getSize();
-        final int start = itemsPerLine  * line;
-        for (int i = start; i <= players.size() % itemsPerLine + start; i++) {
+        int start = itemsPerLine * line;
+        final int size = players.size();
+        if (size % itemsPerLine + start > size) {
+            start = 0;
+        }
+        for (int i = start; i <= size % itemsPerLine + start; i++) {
             // generate the arrow when needed (last slot)
             if (i%itemsPerLine == itemsPerLine-1 && players.size() > itemsPerLine) {
                 final ItemStack next = new ItemStack(NEXT_ITEM);
@@ -77,7 +81,11 @@ public class GUIListener implements Listener {
                 if (meta == null) {
                     continue;
                 }
-                meta.setDisplayName(String.valueOf(line + 1));
+                int nextLine = line+2;
+                if (size % itemsPerLine + itemsPerLine * line+1 > size) {
+                    nextLine = 1;
+                }
+                meta.setDisplayName(String.valueOf(nextLine));
                 next.setItemMeta(meta);
                 gui.addItem(next);
             }
