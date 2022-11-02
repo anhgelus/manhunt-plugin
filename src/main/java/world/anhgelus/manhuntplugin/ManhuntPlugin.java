@@ -2,6 +2,7 @@ package world.anhgelus.manhuntplugin;
 
 import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import world.anhgelus.gamelibrary.commands.Subcommand;
 import world.anhgelus.gamelibrary.game.Game;
@@ -16,6 +17,7 @@ import world.anhgelus.manhuntplugin.command.manhunt.TrackerSubcommand;
 import world.anhgelus.manhuntplugin.conditions.GConditions;
 import world.anhgelus.manhuntplugin.conditions.SConditions;
 import world.anhgelus.manhuntplugin.conditions.WConditions;
+import world.anhgelus.manhuntplugin.events.PlayerListener;
 import world.anhgelus.manhuntplugin.team.TeamList;
 
 import java.util.List;
@@ -62,6 +64,10 @@ public final class ManhuntPlugin extends JavaPlugin {
             manhuntCommand.setExecutor(manhuntCommandExecutor);
             manhuntCommand.setTabCompleter(manhuntCommandExecutor.getGenericTabCompleter());
         }
+
+        // Register the events
+        final PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager.registerEvents(new PlayerListener(), this);
 
         getLogger().info("ManhuntPlugin has been enabled!");
     }

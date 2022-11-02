@@ -7,6 +7,7 @@ import world.anhgelus.gamelibrary.team.Team;
 import world.anhgelus.gamelibrary.team.TeamManager;
 import world.anhgelus.gamelibrary.util.SenderHelper;
 import world.anhgelus.manhuntplugin.team.TeamList;
+import world.anhgelus.manhuntplugin.utils.TeamHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -81,14 +82,10 @@ public class TeamSubcommand extends Subcommand {
         if (team == null) {
             return;
         }
+        assert target != null;
 
-        // if the player is already in a team, remove him from it
-        if (TeamManager.hasTeam(target)) {
-            final Team oldTeam = TeamManager.getTeam(target);
-            assert oldTeam != null;
-            oldTeam.removePlayer(target);
-        }
-        team.addPlayer(target);
+        TeamHelper.addToTeam(target, team);
+
         SenderHelper.sendInfo(player, "Player " + target.getName() + " added to the " + team.getName() + " team");
         SenderHelper.sendInfo(target, "You have been added to the " + team.getName() + " team");
     }
@@ -103,16 +100,15 @@ public class TeamSubcommand extends Subcommand {
         if (team == null) {
             return;
         }
+        assert target != null;
 
         // check if a player is in the team
         if (!TeamManager.hasTeam(target)) {
             SenderHelper.sendError(player, "Player is not in a team");
         }
-        final Team oldTeam = TeamManager.getTeam(target);
-        assert oldTeam != null;
-        oldTeam.removePlayer(target);
 
-        assert target != null;
+        TeamHelper.removeFromTeam(target);
+
         SenderHelper.sendInfo(player, "Player " + target.getName() + " removed from the " + team.getName() + " team");
         SenderHelper.sendInfo(target, "You have been removed from the " + team.getName() + " team");
     }
