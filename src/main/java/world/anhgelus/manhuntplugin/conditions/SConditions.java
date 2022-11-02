@@ -9,6 +9,8 @@ import world.anhgelus.gamelibrary.game.engine.conditions.StartConditions;
 import world.anhgelus.gamelibrary.util.SenderHelper;
 import world.anhgelus.gamelibrary.util.config.Config;
 import world.anhgelus.manhuntplugin.ManhuntPlugin;
+import world.anhgelus.manhuntplugin.player.ManhuntPlayer;
+import world.anhgelus.manhuntplugin.player.ManhuntPlayerManager;
 import world.anhgelus.manhuntplugin.team.TeamList;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class SConditions implements StartConditions {
         }
 
         final int time = getTimeBeforeStartingTheHunt();
+        final int timeUpdate = getUpdateCompassTime();
         final List<Player> players = TeamList.HUNTER.team.getPlayers();
         players.forEach(player -> {
             SenderHelper.sendInfo(player, "The hunt will start in " + time + " seconds! Good luck!");
@@ -36,6 +39,14 @@ public class SConditions implements StartConditions {
             players.forEach(player -> player.setWalkSpeed(1f));
         }, 20L * time);
 
+        // update the compass location
+        Bukkit.getScheduler().runTaskTimerAsynchronously(ManhuntPlugin.getInstance(), () -> {
+            players.forEach(player -> {
+                final ManhuntPlayer manhuntPlayer = ManhuntPlayerManager.getPlayer(player);
+                player.setCompassTarget(manhuntPlayer.getCompassTarget().player.getLocation());
+            });
+        }, 20L * timeUpdate, 20L * timeUpdate);
+
         return true;
     }
 
@@ -45,6 +56,15 @@ public class SConditions implements StartConditions {
      */
     public static int getTimeBeforeStartingTheHunt() {
         final Config config = ManhuntPlugin.getConfigAPI().getConfig("config");
-        return config.get().getInt("time-before-hunters-start");
+        return config.get().getInt("time-before-hunters-start", 60);
+    }
+
+    /**
+     * Get the time between each update
+     * @return The time between each update
+     */
+    public static int getUpdateCompassTime() {
+        final Config config = ManhuntPlugin.getConfigAPI().getConfig("config");
+        return config.get().getInt("time-to-update-compass", 60);
     }
 }

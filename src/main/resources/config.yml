@@ -1,4 +1,6 @@
 # The time in seconds to wait before the hunters can start hunting the runner
 time-before-hunters-start: 60
+# The time between each compass update (in seconds) /!\ A lower the value can cause server lag
+time-to-update-compass: 60
 # The item used to track the runner
 compass-item: COMPASS
