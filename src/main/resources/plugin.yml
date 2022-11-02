@@ -5,4 +5,4 @@ api-version: 1.19
 prefix: Manhunt
 depend: [ GameLibrary ]
 authors: [ "Anhgelus Morhtuuzh" ]
-description: A plugin aiming to add usefull utilities for a manhunt game
+description: A plugin aiming to add useful utilities for a manhunt game
