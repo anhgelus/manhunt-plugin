@@ -1,9 +1,7 @@
 package world.anhgelus.manhuntplugin.conditions;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
 import world.anhgelus.gamelibrary.game.Game;
 import world.anhgelus.gamelibrary.game.engine.conditions.StartConditions;
 import world.anhgelus.gamelibrary.util.SenderHelper;

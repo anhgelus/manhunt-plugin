@@ -1,6 +1,5 @@
 package world.anhgelus.manhuntplugin.player;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import world.anhgelus.gamelibrary.team.Team;
 
