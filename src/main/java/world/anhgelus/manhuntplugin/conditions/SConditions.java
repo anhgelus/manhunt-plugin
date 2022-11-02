@@ -1,9 +1,9 @@
 package world.anhgelus.manhuntplugin.conditions;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitTask;
 import world.anhgelus.gamelibrary.game.Game;
 import world.anhgelus.gamelibrary.game.engine.conditions.StartConditions;
 import world.anhgelus.gamelibrary.util.SenderHelper;
@@ -39,11 +39,12 @@ public class SConditions implements StartConditions {
             players.forEach(player -> player.setWalkSpeed(1f));
         }, 20L * time);
 
-        // update the compass location
+        // update the compass location each x seconds
         Bukkit.getScheduler().runTaskTimerAsynchronously(ManhuntPlugin.getInstance(), () -> {
             players.forEach(player -> {
                 final ManhuntPlayer manhuntPlayer = ManhuntPlayerManager.getPlayer(player);
                 player.setCompassTarget(manhuntPlayer.getCompassTarget().player.getLocation());
+                updateCompassTarget(manhuntPlayer, manhuntPlayer.getCompassTarget());
             });
         }, 20L * timeUpdate, 20L * timeUpdate);
 
@@ -66,5 +67,15 @@ public class SConditions implements StartConditions {
     public static int getUpdateCompassTime() {
         final Config config = ManhuntPlugin.getConfigAPI().getConfig("config");
         return config.get().getInt("time-to-update-compass", 60);
+    }
+
+    /**
+     * Update Compass Target
+     * @param player Player to update
+     * @param target Target
+     */
+    public static void updateCompassTarget(ManhuntPlayer player, ManhuntPlayer target) {
+        player.setCompassTarget(target);
+        player.player.setCompassTarget(target.player.getLocation());
     }
 }

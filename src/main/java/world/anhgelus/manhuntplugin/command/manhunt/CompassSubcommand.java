@@ -7,6 +7,7 @@ import world.anhgelus.gamelibrary.commands.Permission;
 import world.anhgelus.gamelibrary.commands.Subcommand;
 import world.anhgelus.gamelibrary.util.SenderHelper;
 import world.anhgelus.manhuntplugin.ManhuntPlugin;
+import world.anhgelus.manhuntplugin.conditions.SConditions;
 import world.anhgelus.manhuntplugin.player.ManhuntPlayerManager;
 import world.anhgelus.manhuntplugin.utils.MaterialHelper;
 
@@ -54,7 +55,7 @@ public class CompassSubcommand extends Subcommand {
                     SenderHelper.sendError(player, "The player " + args[2] + " is not online");
                     break;
                 }
-                ManhuntPlayerManager.getPlayer(player).setCompassTarget(ManhuntPlayerManager.getPlayer(player));
+                SConditions.updateCompassTarget(ManhuntPlayerManager.getPlayer(player), ManhuntPlayerManager.getPlayer(target));
                 SenderHelper.sendInfo(player, "You are now tracking " + target.getName());
             }
             default -> SenderHelper.sendInfo(player, "/manhunt compass|tracker set|get|track");

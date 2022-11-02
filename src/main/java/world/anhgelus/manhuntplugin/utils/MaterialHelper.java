@@ -1,6 +1,7 @@
 package world.anhgelus.manhuntplugin.utils;
 
 import org.bukkit.Material;
+import world.anhgelus.gamelibrary.util.config.Config;
 
 import java.util.List;
 
@@ -12,5 +13,13 @@ public class MaterialHelper {
             names[i] = values[i].name();
         }
         return List.of(names);
+    }
+
+    public static Material getFromConfig(Config config, String path) {
+        return getFromConfig(config, path, "ARROW");
+    }
+
+    public static Material getFromConfig(Config config, String path, String defaultValue) {
+        return Material.valueOf(config.get().getString(path, defaultValue));
     }
 }

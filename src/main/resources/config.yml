@@ -4,3 +4,7 @@ time-before-hunters-start: 60
 time-to-update-compass: 60
 # The item used to track the runner
 compass-item: COMPASS
+
+# Select track GUI
+gui:
+  next-item: ARROW
