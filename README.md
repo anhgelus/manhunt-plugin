@@ -14,7 +14,7 @@ A plugin aiming to add some useful utilities for the manhunt game
 - [ ] /game pause - Pause the game (manhunt.game.pause)
 - [ ] /game end - End the game (manhunt.game.end)
 - [ ] /game resume - Resume the game (manhunt.game.resume)
-- [ ] /manhunt team [add|remove|list] [player] [team] - Manage the teams (manhunt.team)
+- [x] /manhunt team [add|remove|list] [player] [team] - Manage the teams (manhunt.team)
 - [ ] /manhunt [compass|tracker] [target] - Manage the compass (manhunt.compass)
 - [ ] /manhunt getcompass [target] - Get a compass (no permission)
 
