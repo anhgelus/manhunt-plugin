@@ -1,4 +1,4 @@
-name: Manhunt Plugin
+name: Manhunt
 version: '${version}'
 main: world.anhgelus.manhuntplugin.ManhuntPlugin
 api-version: 1.19
