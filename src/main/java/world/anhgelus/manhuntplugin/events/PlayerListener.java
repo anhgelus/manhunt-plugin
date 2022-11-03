@@ -15,6 +15,7 @@ import world.anhgelus.gamelibrary.util.SenderHelper;
 import world.anhgelus.gamelibrary.util.config.Config;
 import world.anhgelus.gamelibrary.util.config.ConfigAPI;
 import world.anhgelus.manhuntplugin.ManhuntPlugin;
+import world.anhgelus.manhuntplugin.conditions.SConditions;
 import world.anhgelus.manhuntplugin.player.ManhuntPlayer;
 import world.anhgelus.manhuntplugin.player.ManhuntPlayerManager;
 import world.anhgelus.manhuntplugin.team.TeamList;
@@ -66,6 +67,10 @@ public class PlayerListener implements Listener {
 
         final List<Player> players = TeamList.RUNNER.team.getPlayers();
         if (players.isEmpty()) {
+            return;
+        }
+        if (players.size() == 1) {
+            SConditions.updateCompassTarget(ManhuntPlayerManager.getPlayer(e.getPlayer()), ManhuntPlayerManager.getPlayer(players.get(0)));
             return;
         }
         final Inventory gui = GUIListener.generateGUI();
