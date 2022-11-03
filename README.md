@@ -1,12 +1,15 @@
 # Manhunt Plugin
 
-A plugin aiming to add some useful utilities for the manhunt game
+A plugin aiming to add some useful utilities for the manhunt game.
+
+This plugin need the [GameLibrary](https://modrinth.com/plugin/gamelibrary) to work!
 
 ## Features
 
 - [x] Customizable compass
 - [x] Customizable player tracking
 - [x] Game start, game pause, game end
+- [x] GUI to select the player to track
 
 ## Commands
 
