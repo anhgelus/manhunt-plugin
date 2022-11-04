@@ -27,12 +27,21 @@ public class CompassSubcommand extends Subcommand {
 
     @Override
     public List<String> getTabCompleter(Player player, String[] args) {
-        return MaterialHelper.generatePossibilitiesForTab();
+        return compassSubTab(player, args);
     }
 
+    /**
+     * Execute the compass subcommand (/manhunt compass)
+     * @param player The player who executed the command
+     * @param args The arguments of the command
+     */
     public static void compassSub(Player player, String[] args) {
+        if (args.length < 1) {
+            return;
+        }
         if (args.length == 1) {
             SenderHelper.sendInfo(player, "/manhunt compass|tracker set|get|track");
+            return;
         }
         String sub = args[1];
         switch (sub) {
@@ -60,5 +69,25 @@ public class CompassSubcommand extends Subcommand {
             }
             default -> SenderHelper.sendInfo(player, "/manhunt compass|tracker set|get|track");
         }
+    }
+
+    /**
+     * Get the tab completer for the compass subcommand (/manhunt compass)
+     * @param player The player who executed the command
+     * @param args The arguments of the command
+     * @return The list of possible completions
+     */
+    public static List<String> compassSubTab(Player player, String[] args) { // manhunt compass set|get|track <other>
+        if (args.length == 2) {
+            return List.of("set", "get", "track");
+        }
+        if (args.length != 3) {
+            return null;
+        }
+        return switch (args[1]) {
+            case "set" -> MaterialHelper.generatePossibilitiesForTab();
+            case "track" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).toList();
+            default -> null;
+        };
     }
 }

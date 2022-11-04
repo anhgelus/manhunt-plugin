@@ -7,13 +7,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import world.anhgelus.gamelibrary.commands.Subcommand;
 import world.anhgelus.gamelibrary.game.Game;
 import world.anhgelus.gamelibrary.game.commands.GameCommandManager;
+import world.anhgelus.gamelibrary.game.commands.GameCommands;
 import world.anhgelus.gamelibrary.game.engine.GameEngine;
 import world.anhgelus.gamelibrary.team.Team;
 import world.anhgelus.gamelibrary.util.config.ConfigAPI;
-import world.anhgelus.manhuntplugin.command.manhunt.GetCompassSubcommand;
-import world.anhgelus.manhuntplugin.command.manhunt.ManhuntCommand;
-import world.anhgelus.manhuntplugin.command.manhunt.TeamSubcommand;
-import world.anhgelus.manhuntplugin.command.manhunt.TrackerSubcommand;
+import world.anhgelus.manhuntplugin.command.manhunt.*;
 import world.anhgelus.manhuntplugin.conditions.GConditions;
 import world.anhgelus.manhuntplugin.conditions.SConditions;
 import world.anhgelus.manhuntplugin.conditions.WConditions;
@@ -46,8 +44,9 @@ public final class ManhuntPlugin extends JavaPlugin {
 
         final PluginCommand gameCommand = getCommand("game");
         if (gameCommand != null) {
-            gameCommand.setExecutor(manager.registerGameCommands());
-            gameCommand.setTabCompleter(manager.registerGameTabCompleter());
+            final GameCommands gameCommands = manager.registerGameCommands();
+            gameCommand.setExecutor(gameCommands);
+            gameCommand.setTabCompleter(gameCommands.getGenericTabCompleter());
         }
 
         // Initialize the teams
@@ -58,7 +57,7 @@ public final class ManhuntPlugin extends JavaPlugin {
 
         // Register the commands
         final List<Subcommand> manhuntSubcommands = List.of(
-                new TeamSubcommand(), new TrackerSubcommand(), new GetCompassSubcommand()
+                new TeamSubcommand(), new TrackerSubcommand(), new GetCompassSubcommand(), new CompassSubcommand()
         );
         final PluginCommand manhuntCommand = getCommand("manhunt");
         if (manhuntCommand != null) {

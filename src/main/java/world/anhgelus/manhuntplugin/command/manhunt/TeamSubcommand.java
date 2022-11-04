@@ -41,7 +41,7 @@ public class TeamSubcommand extends Subcommand {
 
     @Override
     public List<String> getTabCompleter(Player player, String[] args) {
-        if (args.length == 3) {
+        if (args.length == 4) { // /manhunt team add <team> <player>
             final String sub = args[1];
             final List<String> players = Bukkit.getOnlinePlayers().stream().map(Player::getName).toList();
             switch (sub) {
@@ -51,7 +51,7 @@ public class TeamSubcommand extends Subcommand {
                 case "list":
                     return null;
             }
-        } else if (args.length == 4 && !args[1].equals("list")) {
+        } else if (args.length == 5 && !args[1].equals("list")) {
             final TeamList[] teams = TeamList.values();
             final String[] teamNames = new String[teams.length];
             for (int i = 0; i < teams.length; i++) {
