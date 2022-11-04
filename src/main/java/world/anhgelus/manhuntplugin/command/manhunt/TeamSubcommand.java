@@ -27,21 +27,22 @@ public class TeamSubcommand extends Subcommand {
                 SenderHelper.sendInfo(player, "You are not in a team");
             }
         }
-        if (args.length == 2) {
-            final String sub = args[1];
-            switch (sub) {
-                case "add" -> addSub(player, args);
-                case "remove" -> removeSub(player, args);
-                case "list" -> listSub(player);
-                default -> SenderHelper.sendWarning(player, "Unknown subcommand: " + sub);
-            }
+        final String sub = args[1];
+        switch (sub) {
+            case "add" -> addSub(player, args);
+            case "remove" -> removeSub(player, args);
+            case "list" -> listSub(player);
+            default -> SenderHelper.sendWarning(player, "Unknown subcommand: " + sub);
         }
         return true;
     }
 
     @Override
     public List<String> getTabCompleter(Player player, String[] args) {
-        if (args.length == 4) { // /manhunt team add <team> <player>
+        if (args.length == 2) {
+            return List.of("add", "remove", "list");
+        }
+        if (args.length == 3) { // /manhunt team add <player> <team>
             final String sub = args[1];
             final List<String> players = Bukkit.getOnlinePlayers().stream().map(Player::getName).toList();
             switch (sub) {
@@ -51,7 +52,7 @@ public class TeamSubcommand extends Subcommand {
                 case "list":
                     return null;
             }
-        } else if (args.length == 5 && !args[1].equals("list")) {
+        } else if (args.length == 4 && !args[1].equals("list")) {
             final TeamList[] teams = TeamList.values();
             final String[] teamNames = new String[teams.length];
             for (int i = 0; i < teams.length; i++) {
