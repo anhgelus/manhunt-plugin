@@ -53,8 +53,8 @@ public final class ManhuntPlugin extends JavaPlugin {
         // Initialize the teams
         final TeamList runner = TeamList.RUNNER;
         final TeamList hunter = TeamList.HUNTER;
-        runner.team = new Team(runner.name, runner.uuid, "RUN", runner.color);
-        hunter.team = new Team(hunter.name, hunter.uuid, "HUNT", hunter.color);
+        runner.team = new Team(runner.name, runner.uuid, runner.prefix, runner.color);
+        hunter.team = new Team(hunter.name, hunter.uuid, hunter.prefix, hunter.color);
 
         // Register the commands
         final List<Subcommand> manhuntSubcommands = List.of(
