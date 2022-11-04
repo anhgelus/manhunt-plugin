@@ -8,7 +8,7 @@ import world.anhgelus.gamelibrary.commands.Subcommand;
 import world.anhgelus.gamelibrary.game.Game;
 import world.anhgelus.gamelibrary.game.commands.GameCommandManager;
 import world.anhgelus.gamelibrary.game.engine.GameEngine;
-import world.anhgelus.gamelibrary.team.TeamManager;
+import world.anhgelus.gamelibrary.team.Team;
 import world.anhgelus.gamelibrary.util.config.ConfigAPI;
 import world.anhgelus.manhuntplugin.command.manhunt.GetCompassSubcommand;
 import world.anhgelus.manhuntplugin.command.manhunt.ManhuntCommand;
@@ -51,8 +51,10 @@ public final class ManhuntPlugin extends JavaPlugin {
         }
 
         // Initialize the teams
-        TeamList.RUNNER.team = TeamManager.createTeam(TeamList.RUNNER.name, "RUN", TeamList.RUNNER.color);
-        TeamList.HUNTER.team = TeamManager.createTeam(TeamList.HUNTER.name, "HUNT", TeamList.HUNTER.color);
+        final TeamList runner = TeamList.RUNNER;
+        final TeamList hunter = TeamList.HUNTER;
+        runner.team = new Team(runner.name, runner.uuid, "RUN", runner.color);
+        hunter.team = new Team(hunter.name, hunter.uuid, "HUNT", hunter.color);
 
         // Register the commands
         final List<Subcommand> manhuntSubcommands = List.of(
