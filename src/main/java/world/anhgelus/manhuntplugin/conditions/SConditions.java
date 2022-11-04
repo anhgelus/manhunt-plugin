@@ -11,6 +11,7 @@ import world.anhgelus.manhuntplugin.player.ManhuntPlayer;
 import world.anhgelus.manhuntplugin.player.ManhuntPlayerManager;
 import world.anhgelus.manhuntplugin.team.TeamList;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class SConditions implements StartConditions {
@@ -41,7 +42,6 @@ public class SConditions implements StartConditions {
         Bukkit.getScheduler().runTaskTimerAsynchronously(ManhuntPlugin.getInstance(), () -> {
             players.forEach(player -> {
                 final ManhuntPlayer manhuntPlayer = ManhuntPlayerManager.getPlayer(player);
-                player.setCompassTarget(manhuntPlayer.getCompassTarget().player.getLocation());
                 updateCompassTarget(manhuntPlayer, manhuntPlayer.getCompassTarget());
             });
         }, 20L * timeUpdate, 20L * timeUpdate);
@@ -72,7 +72,8 @@ public class SConditions implements StartConditions {
      * @param player Player to update
      * @param target Target
      */
-    public static void updateCompassTarget(ManhuntPlayer player, ManhuntPlayer target) {
+    public static void updateCompassTarget(ManhuntPlayer player, @Nullable ManhuntPlayer target) {
+        if (target == null) return;
         player.setCompassTarget(target);
         player.player.setCompassTarget(target.player.getLocation());
     }
