@@ -1,0 +1,25 @@
+start: "The hunt has started!"
+before-start: "The hunt will start in %time% seconds!"
+
+# events
+runner-died-to-runner: "You are now a spectator!"
+runner-died-to-all: "%player_name% has died!"
+runner-killed-to-all: "%player_name% has died! He was killed by %killer_name%!"
+
+# commands
+compass-get: "The compass type is %compass_type%"
+tracking: "You are now tracking %player_name%"
+team-get: "You are in the %team_name% team"
+no-team: "You are not in a team"
+player-added-to-team-to-all: "%player_name% has been added to the %team_name% team"
+player-added-to-team-to-player: "You have been added to the %team_name% team"
+player-removed-from-team-to-all: "%player_name% has been removed from the %team_name% team"
+player-removed-from-team-to-player: "You have been removed from the %team_name% team"
+
+# error
+error-team-has-no-player: "The team %team% has no player!"
+error-compass-set-air: "You must hold an item in your hand!"
+error-player-offline: "The player %offline_player% is not online!"
+error-player-not-in-team: "The player %player_name% is not in the %team% team!"
+error-team-not-found: "Team not found!"
+error-player-not-found: "Player not found!"
