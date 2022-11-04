@@ -6,3 +6,10 @@ prefix: Manhunt
 depend: [ GameLibrary ]
 authors: [ "Anhgelus Morhtuuzh" ]
 description: A plugin aiming to add useful utilities for a manhunt game
+commands:
+  game:
+    description: Game management commands
+    usage: Not working
+  manhunt:
+    description: Manhunt commands
+    usage: Not working
