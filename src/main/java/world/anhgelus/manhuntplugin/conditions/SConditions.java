@@ -34,7 +34,7 @@ public class SConditions implements StartConditions {
 
         Bukkit.getScheduler().runTaskLaterAsynchronously(ManhuntPlugin.getInstance(), () -> {
             SenderHelper.broadcastInfo("The hunt has started!");
-            players.forEach(player -> player.setWalkSpeed(1f));
+            players.forEach(player -> player.setWalkSpeed(TeamList.RUNNER.team.getPlayers().get(0).getWalkSpeed()));
         }, 20L * time);
 
         // update the compass location each x seconds
