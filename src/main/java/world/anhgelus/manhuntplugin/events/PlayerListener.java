@@ -5,12 +5,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import world.anhgelus.gamelibrary.team.Team;
 import world.anhgelus.gamelibrary.util.SenderHelper;
 import world.anhgelus.gamelibrary.util.config.Config;
 import world.anhgelus.gamelibrary.util.config.ConfigAPI;
@@ -19,7 +17,6 @@ import world.anhgelus.manhuntplugin.conditions.SConditions;
 import world.anhgelus.manhuntplugin.player.ManhuntPlayer;
 import world.anhgelus.manhuntplugin.player.ManhuntPlayerManager;
 import world.anhgelus.manhuntplugin.team.TeamList;
-import world.anhgelus.manhuntplugin.utils.MaterialHelper;
 
 import java.util.List;
 import java.util.Objects;
@@ -31,14 +28,28 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent e) {
-        final ManhuntPlayer dead = ManhuntPlayerManager.getPlayer(e.getEntity().getPlayer());
+    public void onEntityDamage(EntityDamageByEntityEvent e) {
+        if (!(e.getEntity() instanceof final Player player)) {
+            return;
+        }
+
+        if (player.getHealth() - e.getFinalDamage() > 0) {
+            return;
+        }
+        e.setCancelled(true);
+        player.setInvulnerable(true);
+        final ManhuntPlayer dead = ManhuntPlayerManager.getPlayer(player);
         dead.addOneDeath();
-        final Player killer = e.getEntity().getKiller();
-        ManhuntPlayerManager.getPlayer(killer).addOneKill();
+
+        if (dead.getTeam() == null) {
+            ManhuntPlugin.getInstance().getLogger().warning("The player " + player.getName() + " has no team!");
+            player.setInvulnerable(false);
+            return;
+        }
 
         // if the player is a hunter, return
         if (!Objects.equals(dead.getTeam().getName(), TeamList.RUNNER.name)) {
+            player.setHealth(0);
             return;
         }
 
@@ -47,10 +58,18 @@ public class PlayerListener implements Listener {
         SenderHelper.sendInfo(deadPlayer, "You are now a spectator!");
         deadPlayer.setGameMode(GameMode.SPECTATOR);
 
-        final Team runnerTeam = TeamList.RUNNER.team;
-        runnerTeam.removePlayer(deadPlayer);
+        TeamList.RUNNER.team.removePlayer(deadPlayer);
 
-        if (runnerTeam.getPlayers().isEmpty()) {
+        if (!(e.getDamager() instanceof final Player killer)) {
+            SenderHelper.broadcastWarning(deadPlayer.getName() + " has died!");
+            return;
+        }
+        final ManhuntPlayer hunter = ManhuntPlayerManager.getPlayer(killer);
+        hunter.addOneKill();
+
+        SenderHelper.broadcastWarning(deadPlayer.getName() + " has died! He was killed by " + hunter.player.getName());
+
+        if (TeamList.RUNNER.team.getPlayers().isEmpty()) {
             ManhuntPlugin.getGame().stop(killer);
         }
     }
@@ -63,7 +82,6 @@ public class PlayerListener implements Listener {
 
         final ConfigAPI configAPI = ManhuntPlugin.getConfigAPI();
         final Config config = configAPI.getConfig("config");
-        final ItemStack nextItem = new ItemStack(MaterialHelper.getFromConfig(config, "gui.next-item"));
 
         final List<Player> players = TeamList.RUNNER.team.getPlayers();
         if (players.isEmpty()) {
